@@ -1,0 +1,77 @@
+.asidePanel {
+    position: relative;
+    transition: margin 0.33s, background-color 0.2s;
+    grid-column: 1 / 2;
+    grid-row: 2 / 5;
+    background-color: var(--secondary);
+    border-right: 1px solid var(--primary);
+    width: 20vw;
+    min-width: 200px;
+}
+
+.channel {
+    cursor: pointer;
+    color: var(--primary);
+    text-align: center;
+    text-decoration: underline;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid var(--primary);
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.channels {
+    overflow-y: auto;
+}
+
+.search {
+    width: 0;
+    flex-grow: 1;
+    height: 100%;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.createChannelButton {
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    transition: 0.2s;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    border: var(--close-aside-height) solid transparent;
+    border-right: var(--close-aside-height) solid var(--primary);
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.open {
+    position: absolute;
+    transition: 0.2s;
+    right: -40px;
+    top: 50%;
+    transform: translate(0, -50%);
+    border: var(--close-aside-height) solid transparent;
+    border-left: var(--close-aside-height) solid var(--primary);
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+.open:hover {
+    opacity: 1;
+}

@@ -1,0 +1,13 @@
+:root {
+    --primary: #3288dd;
+    --secondary: #ffffff;
+    --lightblue: #aac;
+    --gray: #666;
+    --dark: #333;
+}
+
+:root {
+    --controls-container-height: 50px;
+    --close-aside-height: 20px;
+}
+

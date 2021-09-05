@@ -1,0 +1,33 @@
+@import '~font-awesome/css/font-awesome.min.css';
+@import "./variables.css";
+@import "header.module.css";
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-columns: min-content 1fr 1fr 1fr;
+    grid-template-rows: min-content 1fr 1fr 1fr;
+}
+
+::placeholder {
+    font-size: 1.1em;
+}
+
+* {
+    transition: background-color 0.2s;
+}
+
+i {
+    font-family: FontAwesome;
+}
