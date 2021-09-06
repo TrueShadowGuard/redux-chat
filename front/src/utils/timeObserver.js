@@ -21,6 +21,10 @@ class TimeObserver {
   timeTick = (date) => {
     this.observers.forEach(observer => observer(date));
   }
+
+  stopListening() {
+    clearInterval(this.interval);
+  }
 }
 
 const timeObserver = new TimeObserver();

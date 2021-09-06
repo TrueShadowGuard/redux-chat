@@ -1,12 +1,13 @@
 .asidePanel {
     position: relative;
-    transition: margin 0.33s, background-color 0.2s;
+    transition: margin 0.33s, background-color 0.5s;
     grid-column: 1 / 2;
     grid-row: 2 / 5;
     background-color: var(--secondary);
     border-right: 1px solid var(--primary);
-    width: 20vw;
-    min-width: 200px;
+    width: 30vw;
+    max-width: 300px;
+    min-width: 150px;
 }
 
 .channel {

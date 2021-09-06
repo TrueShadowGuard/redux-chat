@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,14 +9,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import * as PropTypes from "prop-types";
 
 function InputDialog({open, setOpen, submitCallback}) {
-  const textFieldRef = useRef();
+  const [value,setValue] = useState('');
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleSubmit = () => {
     setOpen(false);
-    submitCallback(textFieldRef.current.value);
+    submitCallback(value);
   }
 
   return (
@@ -29,7 +29,8 @@ function InputDialog({open, setOpen, submitCallback}) {
             margin="dense"
             label="Channel name"
             type="email"
-            inputRef={textFieldRef}
+            value={value}
+            onChange={onChange}
             fullWidth
           />
         </DialogContent>
@@ -44,6 +45,13 @@ function InputDialog({open, setOpen, submitCallback}) {
       </Dialog>
     </div>
   );
+
+  function onChange(e) {
+    const MAX_VALUE_LENGTH = 15;
+    const v = e.target.value;
+    if(v.length > MAX_VALUE_LENGTH) return;
+    setValue(v)
+  }
 }
 
 InputDialog.propTypes = {

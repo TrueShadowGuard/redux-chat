@@ -50,7 +50,6 @@ const Messages = () => {
 
   function listenToEnterPress() {
     const listener = e => {
-      console.log(e)
       if (e.key !== 'Enter') return;
       btnRef.current.click();
     }

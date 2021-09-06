@@ -33,14 +33,6 @@ const SettingsDropdown = ({parentRef, open}) => {
           />
           <span>Dark theme</span>
         </div>
-        <div className={s.setting}>
-          <Checkbox
-            color="primary"
-            checked={isAutoTheme}
-            onChange={(e) => dispatch(setIsAutoTheme(e.target.checked))}
-          />
-          <span>Auto dark theme <br/> from 9pm to 6am</span>
-        </div>
         <div className={`${s.setting} ${s.textFieldDiv}`}>
           <TextField placeholder="Your name"
                      value={username}

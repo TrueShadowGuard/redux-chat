@@ -2,8 +2,6 @@ import React, {useRef} from 'react';
 import s from '../styles/header.module.css';
 import Settings from "./Settings";
 
-const selectUsername = state => state.username;
-
 const Header = () => {
   return (
     <header className={s.header}>

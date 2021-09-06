@@ -40,7 +40,9 @@
 
 .messageInput {
     background-color: var(--secondary);
+    max-width: 100%;
     padding: 0 5px;
+    margin: 0;
     border: none;
     border-radius: 2px;
     outline: none;
