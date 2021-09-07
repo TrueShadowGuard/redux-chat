@@ -4,6 +4,7 @@ import AsidePanel from "./components/AsidePanel";
 import Messages from "./components/Messages";
 import {Provider} from 'react-redux';
 import store from './state/store';
+import './state/localStorageSave';
 import './ws/socket';
 
 const App = () => {

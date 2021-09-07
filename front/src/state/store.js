@@ -3,29 +3,31 @@ import reducer from "./reducer";
 import {setAutoDarkTheme, setDarkTheme, setStandardTheme} from "../utils/__css";
 import initSubscriber from 'redux-subscriber';
 
-const middleware = store => next => action => {
+
+const logger = store => next => action => {
   console.log(action)
   next(action);
 }
 
 const store = configureStore({
   reducer,
-  middleware: [middleware]
+  middleware: [logger]
 });
 
-const subscribe = initSubscriber(store);
+export const subscribe = initSubscriber(store);
 
-subscribe('isDarkTheme',state => {
-  if(state.isDarkTheme) {
+subscribe('isDarkTheme', state => {
+  if (state.isDarkTheme) {
     setDarkTheme();
   } else {
     setStandardTheme();
   }
 });
 
-subscribe('isAutoTheme',state => {
+subscribe('isAutoTheme', state => {
   setAutoDarkTheme(state.isAutoTheme);
 });
+
 
 export default store;
 

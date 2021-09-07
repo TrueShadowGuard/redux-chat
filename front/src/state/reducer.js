@@ -1,4 +1,5 @@
 import {createAction, createReducer} from "@reduxjs/toolkit";
+import loadState from "./loadState";
 
 export const changeChannel = createAction('CHANGE_CHANNEL');
 export const addMessage = createAction('ADD_MESSAGE');
@@ -10,16 +11,7 @@ export const setIsDarkTheme = createAction('SET_IS_DARK_THEME');;
 export const setIsAutoTheme = createAction('SET_AUTO_THEME');
 
 
-const preloadedState = {
-  isDarkTheme: false,
-  isAutoTheme: false,
-  username: '',
-  isConnected: false,
-  channels: [],
-  selectedChannelId: undefined,
-  messageFilter: '',
-  filteredChannels: []
-}
+let preloadedState = loadState();
 
 const reducer = createReducer(preloadedState, {
   [changeChannel]: (state, action) => {

@@ -2,9 +2,15 @@ import {addChannel, addMessage, changeChannel, setChannels} from "../state/reduc
 import store from "../state/store";
 import {INIT, NEW_CHANNEL, NEW_MESSAGE} from "./ws_types";
 
-//const HOST = window.location.origin.replace(/^http/, 'ws');
-const HOST = 'ws://localhost:8080';
-const socket = new WebSocket(HOST);
+
+let host;
+if (process.env.NODE_ENV === 'development') {
+  host = 'ws://localhost:8080';
+} else {
+  host = window.location.origin.replace(/^http/, 'ws');
+}
+
+const socket = new WebSocket(host);
 
 socket.onmessage = (message) => {
   message = JSON.parse(message.data);
