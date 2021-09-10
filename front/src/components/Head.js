@@ -19,6 +19,7 @@ const Head = () => {
 
   return ReactDOM.createPortal(
     <>
+      <title>Redux chat</title>
       <style>{styleHTML}</style>
     </>, document.head
   )

@@ -29,6 +29,7 @@
     background-color: var(--primary);
     padding: 5px;
     min-height: var(--controls-container-height);
+    text-align: center;
 }
 
 .controls > * {
@@ -60,4 +61,16 @@
     border-bottom: 1px solid var(--primary);
     text-align: center;
     line-height: 50px;
+}
+
+.selectEmoji {
+    color: var(--secondary);
+    font-size: 2rem;
+    height: auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+.selectEmoji:hover {
+
 }

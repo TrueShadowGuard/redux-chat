@@ -1,7 +1,12 @@
 .settings {
+    width: 200px;
     position: absolute;
     box-shadow: 0 0 0 2px black;
     background-color: var(--secondary);
+}
+
+.settingsContainer {
+    position: relative;
 }
 
 .settingsButton {
@@ -11,7 +16,8 @@
 }
 
 .header {
-    background-color: var(--gray);
+    background-color: var(--primary);
+    color: var(--secondary);
     height: 40px;
     border-bottom: 2px solid black;
     font-size: 1.5rem;
