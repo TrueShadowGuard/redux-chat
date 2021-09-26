@@ -8,7 +8,9 @@ export default function (channelId, text) {
       channelId,
       message: {
         text,
-        author: store.getState().username
+        author: store.getState().username,
+        authorId: store.getState().userId,
+        date: new Date().toTimeString().split(' ')[0],
       }
     }
   );

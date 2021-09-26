@@ -1,6 +1,6 @@
 import {subscribe} from './store';
 
-const paths = ['isDarkTheme', 'username'];
+const paths = ['isDarkTheme', 'username', 'userId'];
 
 paths.forEach(path => {
   subscribe(path, state => {

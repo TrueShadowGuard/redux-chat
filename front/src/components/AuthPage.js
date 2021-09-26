@@ -4,7 +4,9 @@ import {Card} from '@material-ui/core';
 const AuthPage = () => {
   return (
     <div>
-      <Card/>
+      <Card>
+
+      </Card>
     </div>
   );
 };

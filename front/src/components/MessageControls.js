@@ -15,14 +15,6 @@ const MessageControls = () => {
   useEffect(listenToEnterPress, [btnRef]);
   useEffect(focusInput, [selectedChannelId]);
 
-  const pickerStyle = {
-    position: 'absolute',
-    bottom: '10%',
-    maxWidth: '100%',
-    right: 0
-  };
-
-  open ? (pickerStyle.display = 'block') : (pickerStyle.display = 'none');
 
   return (
     <div className={s.controls}>
@@ -31,17 +23,6 @@ const MessageControls = () => {
              placeholder="Write a message"
              ref={inputRef}
       />
-      <div className={s.emojiContainer}>
-        <i className={`fa fa-smile-o ${s.selectEmoji}`}
-           onClick={() => setOpen(!open)}
-        />
-        <Picker
-          onEmojiClick={(e,emojiObj) => {
-            inputRef.current.value += emojiObj.emoji;
-          }}
-          pickerStyle={pickerStyle}
-        />
-      </div>
       <Button variant="contained"
               color="default"
               ref={btnRef}

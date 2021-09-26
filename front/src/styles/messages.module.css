@@ -2,23 +2,39 @@
     grid-column: 2 / 5;
     grid-row: 2 / 5;
     position: relative;
-    background-color: var(--secondary);
     display: flex;
     flex-direction: column;
+    background-color: var(--secondary);
 }
 
 .messagesList {
+    width: 100%;
     background-color: var(--secondary);
     overflow-y: auto;
-    width: 100%;
+    padding: 5px 20px;
     flex-grow: 1;
 }
 
 .message {
-    font-size: 1.1rem;
-    padding: 5px;
+    padding: 10px;
     min-height: 100px;
-    border-bottom: 1px solid var(--primary);
+    margin-bottom: 20px;
+    width: 60%;
+    font-size: 1.1rem;
+    word-wrap: anywhere;
+    border-radius: 30px;
+}
+
+.messageMine {
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.messageTheir {
+    margin-left: auto;
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--primary);
 }
 
 .controls {
@@ -43,10 +59,14 @@
     background-color: var(--secondary);
     max-width: 100%;
     padding: 0 5px;
-    margin: 0;
+    margin: 0 10px 0 0;
     border: none;
     border-radius: 2px;
     outline: none;
+}
+
+.messageDate {
+    margin-left: 10px;
 }
 
 .sendButton {
@@ -59,18 +79,16 @@
     flex-shrink: 0;
     height: 50px;
     border-bottom: 1px solid var(--primary);
-    text-align: center;
+    text-align: end;
     line-height: 50px;
 }
 
-.selectEmoji {
-    color: var(--secondary);
-    font-size: 2rem;
-    height: auto;
-    cursor: pointer;
-    user-select: none;
-}
-
-.selectEmoji:hover {
-
+@media (max-width: 1000px) {
+    .message {
+        width: 100%;
+        border-radius: 0;
+    }
+    .messagesList {
+        padding: 0;
+    }
 }

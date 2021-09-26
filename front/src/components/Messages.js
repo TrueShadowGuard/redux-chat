@@ -1,9 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import Picker, {SKIN_TONE_NEUTRAL} from 'emoji-picker-react';
 import {useSelector} from "react-redux";
-import sendMessage from "../ws/sendMessage";
 import s from '../styles/messages.module.css';
-import Button from "@material-ui/core/Button";
 import MessageControls from "./MessageControls";
 
 
@@ -16,6 +13,8 @@ const Messages = () => {
     [state.selectedChannelId, state.channels.find(c => c.id === state.selectedChannelId)?.name]
   ));
 
+  const userId = useSelector(state => state.userId);
+
   const messagesListRef = useRef();
 
   useEffect(scrollMessagesToBottom, [messages?.length]);
@@ -27,13 +26,16 @@ const Messages = () => {
       </header>
       <div className={s.messagesList} ref={messagesListRef}>
         {messages?.map((message) => (
-            <Message author={message.author}
-                     text={message.text}
+            <Message
+              author={message.author}
+              text={message.text}
+              date={message.date}
+              isMine={message.authorId === userId}
             />
           )
         )}
       </div>
-      <MessageControls />
+      <MessageControls/>
     </section>
   );
 
@@ -42,13 +44,13 @@ const Messages = () => {
   }
 };
 
-const Message = ({author, text}) => {
-  return (
-    <div className={s.message}>
-      <h1>{author}</h1>
-      <div>{text}</div>
-    </div>
-  )
-}
+const Message = ({text, author, isMine, date}) => (
+  <div className={s.message + ' ' + (isMine ? s.messageMine : s.messageTheir)}>
+    <h1 className={s.messageHeading}>{author} <small className={s.messageDate}>{date}</small></h1>
+    <div>{text}</div>
+  </div>
+);
+
+
 
 export default Messages;

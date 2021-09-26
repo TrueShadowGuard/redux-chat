@@ -3,6 +3,7 @@ export default function () {
     isDarkTheme: false,
     isAutoTheme: false,
     username: '',
+    userId: Math.random(),
     isConnected: false,
     channels: [],
     selectedChannelId: undefined,
