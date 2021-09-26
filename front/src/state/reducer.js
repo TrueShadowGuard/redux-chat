@@ -7,13 +7,13 @@ export const setChannels = createAction('SET_CHANNELS');
 export const setChannelsFilter = createAction('SET_CHANNELS_FILTER');
 export const addChannel = createAction('ADD_CHANNEL');
 export const setUsername = createAction('SET_USERNAME');
-export const setIsDarkTheme = createAction('SET_IS_DARK_THEME');;
+export const setIsDarkTheme = createAction('SET_IS_DARK_THEME');
 export const setIsAutoTheme = createAction('SET_AUTO_THEME');
-
+export const setTyping = createAction('SET_TYPING');
 
 let preloadedState = loadState();
 
-const reducer = createReducer(preloadedState, {
+let reducer = createReducer(preloadedState, {
   [changeChannel]: (state, action) => {
     state.selectedChannelId = action.payload;
   },
@@ -38,6 +38,9 @@ const reducer = createReducer(preloadedState, {
   },
   [setIsAutoTheme]: (state, action) => {
     state.isAutoTheme = action.payload;
+  },
+  [setTyping]: (state, action) => {
+    state.channels.find(c => c.id === action.payload.channelId).isTyping = action.payload.isTyping;
   }
 });
 

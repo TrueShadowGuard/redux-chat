@@ -1,6 +1,7 @@
-import {addChannel, addMessage, changeChannel, setChannels} from "../state/reducer";
+import {addChannel, addMessage, changeChannel, setChannels, setTyping} from "../state/reducer";
 import store from "../state/store";
-import {INIT, NEW_CHANNEL, NEW_MESSAGE} from "./ws_types";
+import {INIT, NEW_CHANNEL, NEW_MESSAGE, TYPING} from "./ws_types";
+import {setTypingAsync} from "../state/async";
 
 const host = process.env.NODE_ENV === 'development' ?
   'ws://localhost:8080' :
@@ -24,7 +25,11 @@ socket.onmessage = (message) => {
       }));
       break;
     case NEW_CHANNEL:
-      store.dispatch(addChannel(message.data.channel));
+      const channel = Object.assign(message.data.channel, {isTyping: false});
+      store.dispatch(addChannel(channel));
+      break;
+    case TYPING:
+      setTypingAsync({channelId: message.data.channelId, isTyping: true});
       break;
     default:
       console.error('Unknown message type: ', message.type);

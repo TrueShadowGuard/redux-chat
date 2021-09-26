@@ -22,7 +22,7 @@
     width: 60%;
     font-size: 1.1rem;
     word-wrap: anywhere;
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 .messageMine {
@@ -81,6 +81,16 @@
     border-bottom: 1px solid var(--primary);
     text-align: end;
     line-height: 50px;
+}
+
+.isSomebodyTyping {
+    margin: 5px;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.visible {
+    opacity: 1;
 }
 
 @media (max-width: 1000px) {

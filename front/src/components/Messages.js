@@ -2,16 +2,15 @@ import React, {useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
+import {selectChannel} from "../state/selectors";
 
 
 const Messages = () => {
-  const messages = useSelector(state => {
-    const id = state.selectedChannelId;
-    return state.channels.find(channel => channel.id === id)?.messages;
-  });
-  const [selectedChannelId, selectedChannelName] = useSelector(state => (
-    [state.selectedChannelId, state.channels.find(c => c.id === state.selectedChannelId)?.name]
-  ));
+
+  const channel = useSelector(selectChannel);
+  const messages = channel?.messages;
+  const selectedChannelName = channel?.name;
+  const isTyping = channel?.isTyping;
 
   const userId = useSelector(state => state.userId);
 
@@ -35,6 +34,7 @@ const Messages = () => {
           )
         )}
       </div>
+      <div className={s.isSomebodyTyping + ' ' + (isTyping ? s.visible : ' ')}>Somebody is typing...</div>
       <MessageControls/>
     </section>
   );
@@ -50,7 +50,6 @@ const Message = ({text, author, isMine, date}) => (
     <div>{text}</div>
   </div>
 );
-
 
 
 export default Messages;

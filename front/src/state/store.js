@@ -8,9 +8,18 @@ const logger = store => next => action => {
   next(action);
 }
 
+const thunk = store => next => action => {
+
+  if (typeof action === 'function') {
+    action(next);
+  } else {
+    next(action);
+  }
+}
+
 const store = configureStore({
   reducer,
-  middleware: [logger]
+  middleware: [logger, thunk]
 });
 
 export const subscribe = initSubscriber(store);

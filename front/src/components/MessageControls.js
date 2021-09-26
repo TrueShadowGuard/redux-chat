@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import s from "../styles/messages.module.css";
-import Picker, {SKIN_TONE_NEUTRAL} from "emoji-picker-react";
 import Button from "@material-ui/core/Button";
 import sendMessage from "../ws/sendMessage";
 import {useSelector} from "react-redux";
+import sendTyping from "../ws/sendTyping";
 
 const MessageControls = () => {
   const selectedChannelId = useSelector(state => state.selectedChannelId);
@@ -22,6 +22,7 @@ const MessageControls = () => {
              className={s.messageInput}
              placeholder="Write a message"
              ref={inputRef}
+             onChange={e => sendTyping(selectedChannelId)}
       />
       <Button variant="contained"
               color="default"

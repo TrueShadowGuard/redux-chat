@@ -2,6 +2,7 @@ const express = require('express');
 const ws = require('ws');
 const router = require("./router");
 const Channel = require("./Channel");
+const {TYPING} = require("./front/src/ws/ws_types");
 const {ADD_CHANNEL} = require("./front/src/ws/ws_types");
 const {NEW_CHANNEL} = require("./front/src/ws/ws_types");
 const {NEW_MESSAGE} = require("./front/src/ws/ws_types");
@@ -15,11 +16,7 @@ app.use(router);
 const server = app.listen(PORT, () => console.log(`Server started at ${PORT}`));
 const wsServer = new ws.Server({server});
 
-const channels = [{
-  id: 0,
-  name: 'ТОПОР 18+',
-  messages: [{author: 'Vadim', text: 'Hello world'}]
-}];
+const channels = [new Channel('ТОПОР 18+')];
 
 wsServer.on('connection', connection => {
   connection.id = Math.random();
@@ -35,13 +32,15 @@ wsServer.on('connection', connection => {
         const channelId = message.data.channelId;
         m.id = Math.random();
         channels.find(c => c.id === channelId).messages.push(m);
-        console.log('m', m);
         sendToClients(wsServer.clients, NEW_MESSAGE, {channelId, message: m});
         break;
       case ADD_CHANNEL:
         const channel = new Channel(message.data.name);
         channels.push(channel);
         sendToClients(wsServer.clients, NEW_CHANNEL, {channel});
+        break;
+      case TYPING:
+        sendToClients(wsServer.clients, 'TYPING', {channelId: message.data.channelId});
         break;
       default:
         console.error('Unknown message');
