@@ -7,12 +7,16 @@
     background-color: var(--secondary);
 }
 
+.messagesListWrapper {
+    width: 100%;
+    flex-grow: 1;
+}
+
 .messagesList {
     width: 100%;
     background-color: var(--secondary);
     overflow-y: auto;
     padding: 5px 20px;
-    flex-grow: 1;
 }
 
 .message {
@@ -23,6 +27,10 @@
     font-size: 1.1rem;
     word-wrap: anywhere;
     border-radius: 20px;
+}
+
+.messageHeading {
+    display: flex;
 }
 
 .messageMine {

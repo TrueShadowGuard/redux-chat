@@ -3,10 +3,11 @@ import s from "../styles/messages.module.css";
 import Button from "@material-ui/core/Button";
 import sendMessage from "../ws/sendMessage";
 import {useSelector} from "react-redux";
+import {selectSelectedChannelID} from "../state/selectors";
 import sendTyping from "../ws/sendTyping";
 
 const MessageControls = () => {
-  const selectedChannelId = useSelector(state => state.selectedChannelId);
+  const selectedChannelId = useSelector(selectSelectedChannelID);
 
   const inputRef = useRef();
   const btnRef = useRef();

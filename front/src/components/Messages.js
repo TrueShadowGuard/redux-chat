@@ -2,17 +2,19 @@ import React, {useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
-import {selectChannel} from "../state/selectors";
+import {selectChannel, selectUserId} from "../state/selectors";
+import Scrollbars from 'react-custom-scrollbars';
 
 
 const Messages = () => {
 
   const channel = useSelector(selectChannel);
+
   const messages = channel?.messages;
   const selectedChannelName = channel?.name;
   const isTyping = channel?.isTyping;
 
-  const userId = useSelector(state => state.userId);
+  const userId = useSelector(selectUserId);
 
   const messagesListRef = useRef();
 
@@ -23,16 +25,22 @@ const Messages = () => {
       <header className={s.header}>
         <h1>{selectedChannelName}</h1>
       </header>
-      <div className={s.messagesList} ref={messagesListRef}>
-        {messages?.map((message) => (
-            <Message
-              author={message.author}
-              text={message.text}
-              date={message.date}
-              isMine={message.authorId === userId}
-            />
-          )
-        )}
+      <div className={s.messagesListWrapper}>
+        <Scrollbars width="100%" height="100%" ref={messagesListRef}>
+          <div className={s.messagesList}>
+            {messages?.map((message, i) => (
+                <Message
+                  author={message.author}
+                  text={message.text}
+                  date={message.date}
+                  isMine={message.authorId === userId}
+                  authorId={message.authorId}
+                  key={i}
+                />
+              )
+            )}
+          </div>
+        </Scrollbars>
       </div>
       <div className={s.isSomebodyTyping + ' ' + (isTyping ? s.visible : ' ')}>Somebody is typing...</div>
       <MessageControls/>
@@ -40,13 +48,15 @@ const Messages = () => {
   );
 
   function scrollMessagesToBottom() {
-    messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
+    messagesListRef.current.scrollToBottom();
   }
 };
 
-const Message = ({text, author, isMine, date}) => (
+const Message = ({text, author, authorId, isMine, date}) => (
   <div className={s.message + ' ' + (isMine ? s.messageMine : s.messageTheir)}>
-    <h1 className={s.messageHeading}>{author} <small className={s.messageDate}>{date}</small></h1>
+    <h1 className={s.messageHeading}>{author}
+      <small className={s.messageDate}>{date}</small>
+    </h1>
     <div>{text}</div>
   </div>
 );
