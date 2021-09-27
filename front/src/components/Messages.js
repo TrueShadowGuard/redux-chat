@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
-import {selectChannel, selectUserId} from "../state/selectors";
+import {selectChannel, selectOnline, selectUserId} from "../state/selectors";
 import Scrollbars from 'react-custom-scrollbars';
 
 
@@ -16,6 +16,8 @@ const Messages = () => {
 
   const userId = useSelector(selectUserId);
 
+  const online = useSelector(selectOnline);
+
   const messagesListRef = useRef();
 
   useEffect(scrollMessagesToBottom, [messages?.length]);
@@ -23,6 +25,7 @@ const Messages = () => {
   return (
     <section className={s.messages}>
       <header className={s.header}>
+        <div>Current online: {online}</div>
         <h1>{selectedChannelName}</h1>
       </header>
       <div className={s.messagesListWrapper}>

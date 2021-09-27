@@ -2,6 +2,7 @@ const express = require('express');
 const ws = require('ws');
 const router = require("./router");
 const Channel = require("./Channel");
+const {ONLINE} = require("./front/src/ws/ws_types");
 const {TYPING} = require("./front/src/ws/ws_types");
 const {ADD_CHANNEL} = require("./front/src/ws/ws_types");
 const {NEW_CHANNEL} = require("./front/src/ws/ws_types");
@@ -9,7 +10,7 @@ const {NEW_MESSAGE} = require("./front/src/ws/ws_types");
 const {ADD_MESSAGE} = require("./front/src/ws/ws_types");
 const {INIT} = require("./front/src/ws/ws_types");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(router);
 
@@ -20,7 +21,8 @@ const channels = [new Channel('ТОПОР 18+')];
 
 wsServer.on('connection', connection => {
   connection.id = Math.random();
-  sendToClient(connection, INIT, channels);
+  sendToClient(connection, INIT, {channels, online: wsServer.clients.size});
+  sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
 
   connection.on('message', message => {
     message = JSON.parse(message);
@@ -47,6 +49,7 @@ wsServer.on('connection', connection => {
     }
   });
   connection.on('close', () => {
+    sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
   });
 });
 

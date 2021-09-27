@@ -10,3 +10,7 @@ export function selectUserId(state) {
 export function selectSelectedChannelID(state) {
   return state.selectedChannelId;
 }
+
+export function selectOnline(state) {
+  return state.online;
+}

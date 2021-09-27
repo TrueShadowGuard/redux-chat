@@ -29,6 +29,7 @@
 
 .channels {
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .search {

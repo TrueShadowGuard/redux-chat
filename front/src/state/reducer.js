@@ -10,6 +10,7 @@ export const setUsername = createAction('SET_USERNAME');
 export const setIsDarkTheme = createAction('SET_IS_DARK_THEME');
 export const setIsAutoTheme = createAction('SET_AUTO_THEME');
 export const setTyping = createAction('SET_TYPING');
+export const setOnline = createAction('SET_ONLINE');
 
 let preloadedState = loadState();
 
@@ -41,6 +42,9 @@ let reducer = createReducer(preloadedState, {
   },
   [setTyping]: (state, action) => {
     state.channels.find(c => c.id === action.payload.channelId).isTyping = action.payload.isTyping;
+  },
+  [setOnline]: (state, action) => {
+    state.online = action.payload;
   }
 });
 

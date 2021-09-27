@@ -1,8 +1,9 @@
-export default function () {
+export default function loadState() {
   const defaultState = {
     isDarkTheme: false,
     isAutoTheme: false,
     username: '',
+    online: 0,
     userId: Math.random(),
     isConnected: false,
     channels: [],
