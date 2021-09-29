@@ -12,6 +12,7 @@ export const setIsDarkTheme = createAction('SET_IS_DARK_THEME');
 export const setIsAutoTheme = createAction('SET_AUTO_THEME');
 export const setTyping = createAction('SET_TYPING');
 export const setOnline = createAction('SET_ONLINE');
+export const setReconnecting = createAction('SET_RECONNECTING');
 
 let preloadedState = loadState();
 
@@ -50,6 +51,9 @@ let reducer = createReducer(preloadedState, {
   },
   [setOnline]: (state, action) => {
     state.online = action.payload;
+  },
+  [setReconnecting]: (state, action) => {
+    state.isReconnecting = action.payload;
   }
 });
 

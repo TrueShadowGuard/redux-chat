@@ -10,6 +10,7 @@ import './ws/socket';
 import Head from "./components/Head";
 
 const App = () => {
+
   return (
     <Provider store={store}>
       <div className="app">
