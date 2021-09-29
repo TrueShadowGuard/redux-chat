@@ -1,5 +1,6 @@
 import {createAction, createReducer} from "@reduxjs/toolkit";
 import loadState from "./loadState";
+import {MAX_MESSAGES_IN_CHANNEL} from "../ws/consts";
 
 export const changeChannel = createAction('CHANGE_CHANNEL');
 export const addMessage = createAction('ADD_MESSAGE');
@@ -21,9 +22,13 @@ let reducer = createReducer(preloadedState, {
   [addMessage]: (state, action) => {
     const channel = state.channels.find(c => c.id === action.payload.channelId);
     channel.messages.push(action.payload.message);
+    if(channel.messages.length > MAX_MESSAGES_IN_CHANNEL) {
+      channel.messages.splice(0, channel.messages.length - MAX_MESSAGES_IN_CHANNEL);
+    }
   },
   [setChannels]: (state, action) => {
-    state.channels = action.payload;
+    const channels = action.payload;
+    state.channels = channels;
   },
   [setChannelsFilter]: (state, action) => {
     state.messageFilter = action.payload;

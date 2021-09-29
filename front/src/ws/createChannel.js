@@ -1,4 +1,4 @@
-import {ADD_CHANNEL} from "./ws_types";
+import {ADD_CHANNEL} from "./consts";
 import socket from "./socket";
 
 export default function createChannel(name) {

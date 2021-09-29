@@ -2,13 +2,14 @@ const express = require('express');
 const ws = require('ws');
 const router = require("./router");
 const Channel = require("./Channel");
-const {ONLINE} = require("./front/src/ws/ws_types");
-const {TYPING} = require("./front/src/ws/ws_types");
-const {ADD_CHANNEL} = require("./front/src/ws/ws_types");
-const {NEW_CHANNEL} = require("./front/src/ws/ws_types");
-const {NEW_MESSAGE} = require("./front/src/ws/ws_types");
-const {ADD_MESSAGE} = require("./front/src/ws/ws_types");
-const {INIT} = require("./front/src/ws/ws_types");
+const {MAX_MESSAGES_IN_CHANNEL} = require("./front/src/ws/consts");
+const {ONLINE} = require("./front/src/ws/consts");
+const {TYPING} = require("./front/src/ws/consts");
+const {ADD_CHANNEL} = require("./front/src/ws/consts");
+const {NEW_CHANNEL} = require("./front/src/ws/consts");
+const {NEW_MESSAGE} = require("./front/src/ws/consts");
+const {ADD_MESSAGE} = require("./front/src/ws/consts");
+const {INIT} = require("./front/src/ws/consts");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -30,10 +31,12 @@ wsServer.on('connection', connection => {
     switch (message.type) {
       case ADD_MESSAGE:
         const m = message.data.message;
-        if(m.author === '') m.author = 'Guest';
+        if (m.author === '') m.author = 'Guest';
         const channelId = message.data.channelId;
         m.id = Math.random();
-        channels.find(c => c.id === channelId).messages.push(m);
+        const c = channels.find(c => c.id === channelId);
+        c.messages.push(m);
+        c.messages.splice(0, c.messages.length - MAX_MESSAGES_IN_CHANNEL);
         sendToClients(wsServer.clients, NEW_MESSAGE, {channelId, message: m});
         break;
       case ADD_CHANNEL:

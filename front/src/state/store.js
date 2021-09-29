@@ -17,4 +17,6 @@ export const subscribe = initSubscriber(store);
 
 export default store;
 
+window.store = store;
+
 

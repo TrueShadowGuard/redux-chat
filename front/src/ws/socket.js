@@ -1,6 +1,6 @@
 import {addChannel, addMessage, changeChannel, setChannels, setOnline, setTyping} from "../state/reducer";
 import store from "../state/store";
-import {INIT, NEW_CHANNEL, NEW_MESSAGE, ONLINE, TYPING} from "./ws_types";
+import {INIT, NEW_CHANNEL, NEW_MESSAGE, ONLINE, TYPING} from "./consts";
 import {setTypingAsync} from "../state/async";
 
 const host = process.env.NODE_ENV === 'development' ?

@@ -1,4 +1,4 @@
-import {ADD_MESSAGE} from "./ws_types";
+import {ADD_MESSAGE} from "./consts";
 import store from "../state/store";
 import send from './send';
 

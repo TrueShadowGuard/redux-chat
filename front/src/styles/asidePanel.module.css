@@ -13,7 +13,6 @@
 .channel {
     cursor: pointer;
     color: var(--primary);
-    text-align: center;
     text-decoration: underline;
 }
 
@@ -28,6 +27,8 @@
 }
 
 .channels {
+    text-align: center;
+    list-style: none;
     overflow-y: auto;
     overflow-x: hidden;
 }
