@@ -7,6 +7,10 @@ export function selectUserId(state) {
   return state.userId;
 }
 
+export function selectUsername(state) {
+  return state.username;
+}
+
 export function selectSelectedChannelID(state) {
   return state.selectedChannelId;
 }

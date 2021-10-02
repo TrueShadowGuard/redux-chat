@@ -36,7 +36,7 @@ const SettingsDropdown = ({parentRef, open}) => {
         <div className={`${s.setting} ${s.textFieldDiv}`}>
           <TextField placeholder="Your name"
                      value={username}
-                     onChange={(e) => dispatch(setUsername(e.target.value))}
+                     disabled={true}
           />
         </div>
       </section>

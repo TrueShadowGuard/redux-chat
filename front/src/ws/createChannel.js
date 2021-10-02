@@ -1,6 +1,6 @@
 import {ADD_CHANNEL} from "./consts";
-import socket from "./socket";
+import send from "./send";
 
 export default function createChannel(name) {
-  socket.send(JSON.stringify({type: ADD_CHANNEL, data: {name}}));
+  send(ADD_CHANNEL, {name});
 }

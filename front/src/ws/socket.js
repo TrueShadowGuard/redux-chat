@@ -5,25 +5,33 @@ import {
   setChannels,
   setOnline,
   setReconnecting,
-  setTyping
+  setTyping, setUsername
 } from "../state/reducer";
 import store from "../state/store";
 import {INIT, NEW_CHANNEL, NEW_MESSAGE, ONLINE, TYPING} from "./consts";
 import {setTypingAsync} from "../state/async";
+import sendInit from "./sendInit";
+
 
 const host = process.env.NODE_ENV === 'development' ?
   'ws://localhost:3001' :
   window.location.origin.replace(/^http/, 'ws');
 
-let socket = connect(host);
+const SocketService = {
+  socket: undefined,
+  connect
+};
 
-function connect(host, onopen) {
-  const websocket = new WebSocket(host);
-  if (typeof onopen === 'function') {
-    websocket.onopen = onopen;
-  }
+connect = connect.bind(SocketService);
 
-  websocket.onmessage = (message) => {
+export function connect(onopen) {
+  const socket = new WebSocket(host);
+
+  socket.onopen = () => {
+    sendInit();
+  };
+
+  socket.onmessage = (message) => {
     message = JSON.parse(message.data);
     console.log('message: ', message)
 
@@ -31,9 +39,14 @@ function connect(host, onopen) {
       case INIT:
         const channels = message.data.channels;
         const online = message.data.online;
+        const username = message.data.username;
         store.dispatch(setChannels(channels));
         store.dispatch(changeChannel(channels[0].id));
         store.dispatch(setOnline(online));
+        store.dispatch(setUsername(username));
+        if (typeof onopen === 'function') {
+          onopen();
+        }
         break;
       case NEW_MESSAGE:
         store.dispatch(addMessage({
@@ -56,14 +69,12 @@ function connect(host, onopen) {
     }
   }
 
-  websocket.onclose = () => {
-    socket = connect(host, () => store.dispatch(setReconnecting(false)));
+  socket.onclose = () => {
     store.dispatch(setReconnecting(true));
+    this.connect(() => store.dispatch(setReconnecting(false)));
   }
 
-  return websocket;
+  this.socket = socket;
 }
 
-export default socket;
-
-window.socket = socket;
+export default SocketService;

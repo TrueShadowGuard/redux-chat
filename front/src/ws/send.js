@@ -1,5 +1,7 @@
-import socket from "./socket";
+import SocketService from "./socket";
+import store from '../state/store';
 
 export default function send(type, data) {
-  socket.send(JSON.stringify({type, data}));
+  const token = store.getState().token;
+  SocketService.socket.send(JSON.stringify({type, data, token}));
 }

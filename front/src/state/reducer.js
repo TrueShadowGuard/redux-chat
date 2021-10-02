@@ -13,6 +13,7 @@ export const setIsAutoTheme = createAction('SET_AUTO_THEME');
 export const setTyping = createAction('SET_TYPING');
 export const setOnline = createAction('SET_ONLINE');
 export const setReconnecting = createAction('SET_RECONNECTING');
+export const setToken = createAction('SET_TOKEN');
 
 let preloadedState = loadState();
 
@@ -54,6 +55,9 @@ let reducer = createReducer(preloadedState, {
   },
   [setReconnecting]: (state, action) => {
     state.isReconnecting = action.payload;
+  },
+  [setToken]: (state, action) => {
+    state.token = action.payload;
   }
 });
 

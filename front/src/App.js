@@ -1,24 +1,24 @@
 import React from 'react';
-import Header from "./components/Header";
-import AsidePanel from "./components/AsidePanel";
-import Messages from "./components/Messages";
 import {Provider} from 'react-redux';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+
+import AuthPage from "./pages/AuthPage";
+import ChatPage from "./pages/ChatPage";
+
 import store from './state/store';
-import './state/async';
-import './state/localStorageSave';
+import './state/storeUtils';
+
 import './ws/socket';
-import Head from "./components/Head";
+
+import Routes from "./Routes";
 
 const App = () => {
 
   return (
     <Provider store={store}>
-      <div className="app">
-        <Head/>
-        <Header/>
-        <Messages/>
-        <AsidePanel/>
-      </div>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </Provider>
   );
 };

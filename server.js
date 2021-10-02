@@ -1,7 +1,16 @@
 const express = require('express');
 const ws = require('ws');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+const bodyParser = require('body-parser');
+const cors = require("cors");
+require('dotenv').config();
+
 const router = require("./router");
-const Channel = require("./Channel");
+const Channel = require("./utils/Channel");
+const User = require('./models/User');
+
 const {MAX_MESSAGES_IN_CHANNEL} = require("./front/src/ws/consts");
 const {ONLINE} = require("./front/src/ws/consts");
 const {TYPING} = require("./front/src/ws/consts");
@@ -12,7 +21,16 @@ const {ADD_MESSAGE} = require("./front/src/ws/consts");
 const {INIT} = require("./front/src/ws/consts");
 
 const PORT = process.env.PORT || 3001;
+const secret = process.env.JWT_SECRET;
 const app = express();
+
+mongoose.connect(process.env.MONGO)
+  .then(r => {
+    console.log("Connected to mongodb");
+  })
+
+app.use(cors());
+app.use(bodyParser.json());
 app.use(router);
 
 const server = app.listen(PORT, () => console.log(`Server started at ${PORT}`));
@@ -21,19 +39,29 @@ const wsServer = new ws.Server({server});
 const channels = [new Channel('ТОПОР 18+')];
 
 wsServer.on('connection', connection => {
-  connection.id = Math.random();
-  sendToClient(connection, INIT, {channels, online: wsServer.clients.size});
-  sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
 
   connection.on('message', message => {
     message = JSON.parse(message);
+    if(message.type === INIT) {
+      const payload = jwt.verify(message.token, secret);
+      if(!payload) return connection.close();
+      const username = payload?.username || 'unnamed';
+      connection.id = Math.random();
+      connection.username = username;
+      sendToClient(connection, INIT, {channels, online: wsServer.clients.size, username});
+      sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
+      return;
+    }
+    const token = message.token;
+    if(!token) return connection.close();
+    const payload = jwt.verify(token, secret);
 
     switch (message.type) {
       case ADD_MESSAGE:
         const m = message.data.message;
-        if (m.author === '') m.author = 'Guest';
         const channelId = message.data.channelId;
         m.id = Math.random();
+        m.author = connection.username;
         const c = channels.find(c => c.id === channelId);
         c.messages.push(m);
         c.messages.splice(0, c.messages.length - MAX_MESSAGES_IN_CHANNEL);

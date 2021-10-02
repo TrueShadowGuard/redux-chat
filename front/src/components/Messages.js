@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
-import {selectChannel, selectOnline, selectUserId} from "../state/selectors";
+import {selectChannel, selectOnline, selectUserId, selectUsername} from "../state/selectors";
 import Scrollbars from 'react-custom-scrollbars';
 
 
@@ -14,7 +14,7 @@ const Messages = () => {
   const selectedChannelName = channel?.name;
   const isTyping = channel?.isTyping;
 
-  const userId = useSelector(selectUserId);
+  const username = useSelector(selectUsername);
 
   const online = useSelector(selectOnline);
 
@@ -36,7 +36,7 @@ const Messages = () => {
                   author={message.author}
                   text={message.text}
                   date={message.date}
-                  isMine={message.authorId === userId}
+                  isMine={message.author === username}
                   authorId={message.authorId}
                   key={i}
                 />
