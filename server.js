@@ -10,6 +10,7 @@ require('dotenv').config();
 const router = require("./router");
 const Channel = require("./utils/Channel");
 const User = require('./models/User');
+const {BAD_TOKEN} = require("./front/src/ws/consts");
 
 const {MAX_MESSAGES_IN_CHANNEL} = require("./front/src/ws/consts");
 const {ONLINE} = require("./front/src/ws/consts");
@@ -42,21 +43,26 @@ wsServer.on('connection', connection => {
 
   connection.on('message', message => {
     message = JSON.parse(message);
-    if(message.type === INIT) {
-      const payload = jwt.verify(message.token, secret);
-      if(!payload) return connection.close();
-      const username = payload?.username || 'unnamed';
-      connection.id = Math.random();
-      connection.username = username;
-      sendToClient(connection, INIT, {channels, online: wsServer.clients.size, username});
-      sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
+    console.log('message', message);
+    const token = message.token;
+    if (!token) {
+      sendToClient(connection, BAD_TOKEN);
       return;
     }
-    const token = message.token;
-    if(!token) return connection.close();
     const payload = jwt.verify(token, secret);
+    if (!payload) {
+      sendToClient(connection, BAD_TOKEN);
+      return;
+    }
 
     switch (message.type) {
+      case INIT:
+        const username = payload?.username || 'unnamed';
+        connection.id = Math.random();
+        connection.username = username;
+        sendToClient(connection, INIT, {channels, online: wsServer.clients.size, username});
+        sendToClients(wsServer.clients, ONLINE, {online: wsServer.clients.size});
+        break;
       case ADD_MESSAGE:
         const m = message.data.message;
         const channelId = message.data.channelId;

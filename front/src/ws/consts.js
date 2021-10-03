@@ -9,4 +9,6 @@ module.exports.NEW_MESSAGE = 'NEW_MESSAGE';
 module.exports.NEW_CHANNEL = 'NEW_CHANNEL';
 module.exports.CREATE_CHANNEL = 'CREATE_CHANNEL';
 
+module.exports.BAD_TOKEN = 'BAD_TOKEN';
+
 module.exports.MAX_MESSAGES_IN_CHANNEL = 100;

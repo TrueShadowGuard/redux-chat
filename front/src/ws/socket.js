@@ -4,11 +4,11 @@ import {
   changeChannel,
   setChannels,
   setOnline,
-  setReconnecting,
+  setReconnecting, setToken,
   setTyping, setUsername
 } from "../state/reducer";
 import store from "../state/store";
-import {INIT, NEW_CHANNEL, NEW_MESSAGE, ONLINE, TYPING} from "./consts";
+import {BAD_TOKEN, INIT, NEW_CHANNEL, NEW_MESSAGE, ONLINE, TYPING} from "./consts";
 import {setTypingAsync} from "../state/async";
 import sendInit from "./sendInit";
 
@@ -28,7 +28,7 @@ export function connect(onopen) {
   const socket = new WebSocket(host);
 
   socket.onopen = () => {
-    sendInit();
+    setTimeout(() => sendInit());
   };
 
   socket.onmessage = (message) => {
@@ -63,6 +63,9 @@ export function connect(onopen) {
         break;
       case ONLINE:
         store.dispatch(setOnline(message.data.online));
+        break;
+      case BAD_TOKEN:
+        store.dispatch(setToken(undefined));
         break;
       default:
         console.error('Unknown message type: ', message.type);
