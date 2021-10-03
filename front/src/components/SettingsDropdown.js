@@ -2,7 +2,7 @@ import React, {useMemo, useState} from 'react';
 import s from '../styles/settings.module.css';
 import {Checkbox, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {setIsAutoTheme, setIsDarkTheme, setUsername} from "../state/reducer";
+import {setIsAutoTheme, setIsDarkTheme, setToken, setUsername} from "../state/reducer";
 
 const SettingsDropdown = ({parentRef, open}) => {
   const dispatch = useDispatch();
@@ -33,11 +33,8 @@ const SettingsDropdown = ({parentRef, open}) => {
           />
           <span>Dark theme</span>
         </div>
-        <div className={`${s.setting} ${s.textFieldDiv}`}>
-          <TextField placeholder="Your name"
-                     value={username}
-                     disabled={true}
-          />
+        <div className={`${s.setting}`}>
+          <button onClick={() => dispatch(setToken(undefined))}>Sign out</button>
         </div>
       </section>
     </div>

@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require("path");
 const authRouter = require('./authRouter');
+const usersRouter = require("./usersRouter");
 
 const router = express();
 
-router.use('/auth', authRouter)
+router.use('/auth', authRouter);
+router.use('/users', usersRouter)
 
 router.use(express.static(path.join(__dirname, 'front', 'build')));
 

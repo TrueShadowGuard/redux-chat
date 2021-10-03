@@ -6,6 +6,7 @@ import {NavLink, useHistory} from "react-router-dom";
 
 import {connect} from '../ws/socket';
 import {func} from "prop-types";
+import sendInit from "../ws/sendInit";
 
 const AuthPage = () => {
   const loginRef = React.useRef();
@@ -28,7 +29,8 @@ const AuthPage = () => {
     const response = await axios.post('/auth/login', {username: loginRef.current.value, password: passwordRef.current.value});
     if(response.status === 200) {
       dispatch(setToken(response.data.token));
-      connect(() => history.push('/'))
+      sendInit();
+      history.push('/');
     }
   }
 
@@ -36,7 +38,8 @@ const AuthPage = () => {
     const response = await axios.post('/auth/register', {username: loginRef.current.value, password: passwordRef.current.value});
     if(response.status === 200) {
       dispatch(setToken(response.data.token));
-      connect(() => history.push('/'))
+      sendInit();
+      history.push('/');
     }
   }
 };

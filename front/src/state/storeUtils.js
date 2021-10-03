@@ -1,2 +1,0 @@
-import './loadState';
-import './async';
