@@ -4,6 +4,7 @@ import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
 import {selectChannel, selectOnline, selectUserId, selectUsername} from "../state/selectors";
 import Scrollbars from 'react-custom-scrollbars';
+import {NavLink} from "react-router-dom";
 
 
 const Messages = () => {
@@ -57,7 +58,8 @@ const Messages = () => {
 
 const Message = ({text, author, authorId, isMine, date}) => (
   <div className={s.message + ' ' + (isMine ? s.messageMine : s.messageTheir)}>
-    <h1 className={s.messageHeading}>{author}
+    <h1 className={s.messageHeading}>
+      <NavLink to={"/users/" + author} className="link">{author}</NavLink>
       <small className={s.messageDate}>{date}</small>
     </h1>
     <div>{text}</div>

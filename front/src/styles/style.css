@@ -44,3 +44,13 @@ body,
 i {
     font-family: FontAwesome;
 }
+
+.link {
+    font-size: 1.4rem;
+    color: #555;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
