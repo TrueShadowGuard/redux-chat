@@ -18,3 +18,8 @@ export function selectSelectedChannelID(state) {
 export function selectOnline(state) {
   return state.online;
 }
+
+export function selectIsAsideOpen(state) {
+  return state.isAsideOpen;
+}
+

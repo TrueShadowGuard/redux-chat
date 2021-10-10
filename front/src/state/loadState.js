@@ -1,5 +1,6 @@
 export default function loadState() {
   const defaultState = {
+    isAsideOpen: false,
     isDarkTheme: false,
     isAutoTheme: false,
     username: '',

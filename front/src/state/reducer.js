@@ -14,6 +14,7 @@ export const setTyping = createAction('SET_TYPING');
 export const setOnline = createAction('SET_ONLINE');
 export const setReconnecting = createAction('SET_RECONNECTING');
 export const setToken = createAction('SET_TOKEN');
+export const setIsAsideOpen = createAction('SET_IS_ASIDE_OPEN');
 
 let preloadedState = loadState();
 
@@ -58,6 +59,9 @@ let reducer = createReducer(preloadedState, {
   },
   [setToken]: (state, action) => {
     state.token = action.payload;
+  },
+  [setIsAsideOpen]: (state, action) => {
+    state.isAsideOpen = action.payload;
   }
 });
 

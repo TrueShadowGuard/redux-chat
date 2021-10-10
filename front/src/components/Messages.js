@@ -2,9 +2,10 @@ import React, {useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 import s from '../styles/messages.module.css';
 import MessageControls from "./MessageControls";
-import {selectChannel, selectOnline, selectUserId, selectUsername} from "../state/selectors";
+import {selectChannel, selectIsAsideOpen, selectOnline, selectUserId, selectUsername} from "../state/selectors";
 import Scrollbars from 'react-custom-scrollbars';
 import {NavLink} from "react-router-dom";
+import {useMediaQuery} from "@material-ui/core";
 
 
 const Messages = () => {
@@ -21,9 +22,14 @@ const Messages = () => {
 
   const messagesListRef = useRef();
 
+  const isSmallScreen = useMediaQuery("@media screen and (max-width: 500px)");
+
+  const isAsideOpen = useSelector(selectIsAsideOpen);
+
   useEffect(scrollMessagesToBottom, [messages?.length]);
 
   return (
+    (isSmallScreen && isAsideOpen) ? null :
     <section className={s.messages}>
       <header className={s.header}>
         <div>Current online: {online}</div>
